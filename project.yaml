@@ -1,0 +1,30 @@
+specVersion: 0.2.0
+name: subquery-project-1
+version: 1.0.0
+description: ""
+repository: ""
+schema:
+  file: ./schema.graphql
+network:
+  genesisHash: '0xb0a8d493285c2df73290dfb7e61f870f17b41801197a149ca93654499ea3dafe'
+  endpoint: wss://pub.elara.patract.io/kusama
+  dictionary: https://api.subquery.network/sq/subquery/dictionary-kusama
+dataSources:
+  - kind: substrate/Runtime
+    startBlock: 4892957
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - handler: handleBlock
+          kind: substrate/BlockHandler
+        - handler: handleEvent
+          kind: substrate/EventHandler
+          filter:
+            module: balances
+            method: Deposit
+        - handler: handleCall
+          kind: substrate/CallHandler
+          filter:
+            module: system
+            method: remark
+            success: true
