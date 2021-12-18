@@ -26,6 +26,8 @@ services:
     command:
       - -f=/app
       - --local
+      - --batch-size=50
+      - --unsafe
 
   graphql-engine:
     image: onfinality/subql-query:latest
