@@ -18,3 +18,36 @@ type RemarkEntity @entity {
   timestamp: Date
   formatedValue: String!
 }
+
+type CollectionEntity @entity {
+  id: ID!
+  blockNumber: BigInt @index
+  version: String
+  name: String
+  max: Int
+  issuer: String
+  symbol: String
+  metadata: String
+  currentOwner: String
+  nfts: [NFTEntity] @derivedFrom(field: "collection")
+
+  timestampCreatedAt: Date
+  timestampUpdatedAt: Date
+}
+
+type NFTEntity @entity {
+  id: ID!
+  blockNumber: BigInt @index
+  collection: CollectionEntity!
+  name: String @index
+  transferable: Int
+  issuer: String @index
+  sn: String
+  metadata: String
+  currentOwner: String
+  price: BigInt
+  burned: Boolean
+
+  timestampCreatedAt: Date
+  timestampUpdatedAt: Date
+}
