@@ -41,8 +41,9 @@ export async function handleCall(extrinsic: SubstrateExtrinsic): Promise<void> {
             caller: signer,
             blockNumber,
             timestamp,
-            formatedValue: hexToString(remarkResult.value)
+            formatedValue: ''
         };
+        remarkResult.formatedValue = hexToString(remarkResult.value);
     }
 
     if (remarkResult) {
@@ -123,11 +124,11 @@ function getNftId_V01(nft: any): string {
 
 async function mintNFT_V1(remark: RemarkResult) {
     let nft = null;
-    const specVersion: RmrkSpecVersion = getRmrkSpecVersion(remark.value);
+    const specVersion: RmrkSpecVersion = getRmrkSpecVersion(remark.formatedValue);
 
     try {
 
-        nft = unwrap(remark.value) as NFT;
+        nft = unwrap(remark.formatedValue) as NFT;
         if (!nft.collection) {
             throw new ReferenceError('[CONSOLIDATE error] nft collection is null');
         }
